@@ -46,7 +46,7 @@
 
 .editor{
     overflow: hidden;
-    box-shadow: -2px 1px 6px #6e6e6e;
+    box-shadow: -2px 1px 6px #6e6e6e46;
     width: 50%;
 }
 
@@ -66,6 +66,10 @@
 .questions-tab{
     height: 600px;
     width: calc(100% - 30px);
+    white-space: pre-wrap;
+    padding: 20px 30px;
+    overflow: auto;
+    
 }
 
 .question-nav{
@@ -73,7 +77,53 @@
 }
 
 .questions-nav{
-    height: 50px;
+    height: 40px;
+    box-shadow: -2px 1px 6px #6e6e6e46;
+    padding: 10px;
+}
+
+.tab-head{
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+
+.active-tab{
+    background-color: #02326E;
+    color: #fff;
+}
+
+.tabs{
+height: 100%;
+}
+
+.run-img{
+    width: 30px;
+    height: 30px;
+}
+
+.product-name{
+    font-size: 25px;
+    color: #fff;
+}
+
+.run-container{
+    width: 75px;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 30px;
+}
+
+.run-container:active{
+    transform: scale(0.9);
+}
+
+.logs{
+    height: calc(100% - 700px);
+    z-index: 10px;
 }
 
 @media (max-width:1366px){

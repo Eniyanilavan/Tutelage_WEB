@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './testcase.css';
 import FileUpload from '../FileUpload';
+import {host} from '../../config'
 
 export default class TestCase extends Component {
     constructor(props) {
@@ -67,11 +68,21 @@ export default class TestCase extends Component {
         console.log("state", this.state.questions_obj);
     }
 
+    upload = ()=>{
+        fetch(`http://${host}/upload/sample`, {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({"questions":this.state.questions_obj})
+        })
+    }
+
     render() {
         var question = this.state.questions.map((elem, index) => {
             console.log("the index value is ", index);
             if (index === this.state.cur_question - 1) {
-                return <FileUpload updateTestcase={this.updateTestcase} index={index} store={this.state.questions_obj[index]} updateQuestions={this.updateQuestions} />
+                return <FileUpload upload={this.upload} updateTestcase={this.updateTestcase} index={index} store={this.state.questions_obj[index]} updateQuestions={this.updateQuestions} />
             }
         })
         return (

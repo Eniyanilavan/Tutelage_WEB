@@ -46,7 +46,7 @@ export default class FileUpload extends Component {
                     <textarea onChange={this.onChange} id="preview" className="preview" ref={el => this.preview = el}>
                         {this.props.store.string}
                     </textarea>
-                    <button className="Fupload transition-ease" id="Fupload">
+                    <button onClick={this.props.upload} className="Fupload transition-ease" id="Fupload">
                         Upload
                     </button>
                 </div>

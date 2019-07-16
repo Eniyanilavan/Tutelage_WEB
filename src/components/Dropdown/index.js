@@ -44,7 +44,7 @@ export default class Dropdown extends Component {
                     </div>
                     <div className="arrow"><img className="arrow-drop" ref={el=>this.arrow=el} src={this.props.arrow||arrow} alt="⥮" /></div>
                 </div>
-                <div ref={el=>this.dropId=el} className="drop-down hide" style={{backgroundColor:this.props.bg, color:this.props.font}} id="drop-id">
+                <div ref={el=>this.dropId=el} className="drop-down hide" style={{backgroundColor:this.props.dropC||this.props.bg, color:this.props.font}} id="drop-id">
                     {list}
                 </div>
             </div>
