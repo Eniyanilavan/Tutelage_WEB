@@ -1,38 +1,50 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './fileupload.css';
-import TestCard from '../TestCard';
+import '../TestCard/testcard.css';
 
-export default class FileUpload extends Component{
 
-    constructor(props){
-        super(props)
-        this.state = {
-            question:"question here"
-        }
+export default class FileUpload extends Component {
+    state = {
+        input: "",
+        output: "",
+        store: this.props.store
+    }
+    onChange = (e) => {
+        this.props.updateQuestions(e.target.value, this.props.index);
     }
 
-    componentDidMount(){
-        console.log("hi", this.state.question)
-        // this.preview.value = this.state.question
+    onChangeInput = (e) => {
+        this.state.input = e.target.value;
+        // this.props.updateTestcase(e.target.value,this.props.index,0);
     }
-
-    componentWillUnmount(){
-        console.log("unmount")
+    onChangeOutput = (e) => {
+        this.state.output = e.target.value;
+        // this.props.updateTestcase(e.target.value,this.props.index,1);
     }
-
-    onChange = (e)=>{
-        console.log(e.target.value)
+    uploadTestcase = () => {
+        this.props.updateTestcase(this.state.input, this.state.output, this.props.index);
+        document.querySelector("#testcase_output").value = "";
+        document.querySelector("#testcase_input").value = "";
+        this.state.input = "";
+        this.state.output = "";
         this.setState({
-            question:e.target.value
-        },()=>this.preview.value = this.state.question)
+            store:this.props.store
+        });
+        console.log(this.props.store);
+
     }
 
-    render(){
-        return(
+    render() {
+        console.log(this.props.store.testcases[0].input);
+        console.log("hello there!!", this.props);
+        var contents = this.state.store.testcases.map((item) => {
+            return (<tr><td>{item.input}</td><td>{item.output}</td></tr>)
+        })
+        return (
             <div className="width-full flex">
                 <div className="file-content flex height-full justify-space-e flex-column align-center">
-                    <textarea onChange={this.onChange} id="preview" className="preview" ref={el=>this.preview=el}>
-
+                    <textarea onChange={this.onChange} id="preview" className="preview" ref={el => this.preview = el}>
+                        {this.props.store.string}
                     </textarea>
                     <button className="Fupload transition-ease" id="Fupload">
                         Upload
@@ -43,9 +55,35 @@ export default class FileUpload extends Component{
                         <h1 className="margin-left-10" >
                             Test Cases
                         </h1>
-                        <span id="add"> + </span>
+                        <span onClick={this.uploadTestcase} id="add"> + </span>
                     </div>
-                    <TestCard/>
+                    <div className="testcard flex">
+                        <div className="input flex flex-column width-half height-full justify-center">
+                            <span className="margin-left-10">
+                                Input
+                    </span>
+                            <textarea id="testcase_input" onChange={this.onChangeInput} >
+                                {this.props.store.testcases[0].input}
+                            </textarea>
+                        </div>
+                        <div className="output flex flex-column input width-half height-full justify-center">
+                            <span className="margin-left-10" >
+                                Output
+                    </span>
+                            <textarea id="testcase_output" onChange={this.onChangeOutput}>
+                                {this.props.store.testcases[0].output}
+                            </textarea>
+                        </div>
+                    </div>
+                    {this.state.store.testcases[0].input!==""? <div className="table">
+                        <table id="customers">
+                            <tr>
+                                <th>Input(s)</th>
+                                <th>Output(s)</th>
+                            </tr>
+                            {contents}
+                        </table>
+                    </div> : null}
                 </div>
             </div>
 
