@@ -1,0 +1,47 @@
+.testcard{
+    background-color: #02326E;
+    width: 820px;
+    height: 333px;
+    box-shadow: 2px 3px 6px #0000007e;
+}
+
+.testcard, .input textarea{
+    border-radius: 20px;
+}
+
+.input{
+    padding-left: 20px;
+}
+
+.input span{
+    color: #04DBB3;
+    font-size: 22px;
+}
+
+.input textarea{
+    margin-top: 10px;
+    resize: none;
+    height: 220px;
+    width: 350px;
+    outline: none;
+    padding: 10px 10px 10px 10px;
+    font-size: 14px;
+}
+
+@media(max-width:1366px){
+    .testcard{
+        height: 320px;
+        width: 650px;
+        
+    }
+
+    .input textarea{
+        margin-top: 10px;
+        resize: none;
+        height: 180px;
+        width: 250px;
+        outline: none;
+        padding: 10px 10px 10px 10px;
+        font-size: 14px;
+    }
+}

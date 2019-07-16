@@ -1,0 +1,89 @@
+.Enav{
+    background-color: #02326E;
+    height: 60px;
+}
+
+.workspace{
+    height: calc(100% - 60px);
+    background-color: white;
+}
+
+.questions{
+    background-color: white;
+    width: 70%;
+    transition: all 0.3s;
+}
+
+.shorten{
+    width: 35%;
+}
+
+.extender{
+    background-color: #02326E;
+    border-radius: 10px 0px 0px 10px;
+    height: 55px;
+    width: 30px;
+    color: white;
+    font-size: 14px;
+    margin-top: 32%;
+    transition: all 0.3s;
+    box-shadow: -1px 1px 6px #02326E;
+    color: #02f5e9;
+}
+
+.extender img{
+    width: 20px;
+    height: 20px;
+}
+
+.extender:hover{
+    cursor: pointer;
+}
+
+.extender:active{
+    box-shadow: none;
+}
+
+.editor{
+    overflow: hidden;
+    box-shadow: -2px 1px 6px #6e6e6e;
+    width: 50%;
+}
+
+.extend{
+    width: 65%;
+}
+
+.monaco-editor{
+    padding-top: 20px;
+}
+.monaco{
+    padding-top: 10px;
+    /* transition: all 0.3s; */
+
+}
+
+.questions-tab{
+    height: 600px;
+    width: calc(100% - 30px);
+}
+
+.question-nav{
+    border-bottom: 2px solid black;
+}
+
+.questions-nav{
+    height: 50px;
+}
+
+@media (max-width:1366px){
+    .extender{
+        left: 48.5%;
+    }
+    .questions-tab{
+        height: 350px;
+    }
+    .shorten{
+        width: 40%;
+    }
+}

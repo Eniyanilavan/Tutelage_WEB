@@ -1,0 +1,165 @@
+.form{
+    width: 50%;
+}
+
+.bg{
+    width: 50%;
+}
+
+.loginform{
+    width: 600px;
+    height: 650px;
+    background-color: #02326E;
+    border-radius: 70px;
+    box-shadow: 2px 1px 6px #02326E;
+}
+
+.nav{
+    margin: 0px 80px 0px 80px;
+}
+
+.loginform nav{
+    height: 100px;
+    color: #4EBEFF;
+    font-size: 30px;
+    align-items: flex-end;
+}
+
+.loginform nav span:hover{
+    cursor: pointer;
+}
+
+.tab{
+    border-bottom: 5px solid #4EBEFF;
+    border-radius: 10px;
+    width: 130px;
+    margin-left: 120px;
+    margin-top: 10px;
+    transition: margin 0.2s;
+}
+
+.right{
+    width: 150px;
+    margin-left: 330px;
+}
+
+.fields{
+    height: calc(100% - 100px);
+    padding: 100px 0px 50px 0px;
+}
+.Sfields{
+    height: calc(100% - 100px);
+    padding: 70px 0px 50px 0px;
+}
+
+.submit{
+    width: 200px;
+    height: 50px;
+    border: none;
+    color: white;
+    background-color: #4EBEFF;
+    border-radius: 12px;
+    font-size: 18px;
+    box-shadow: 1px 0px 6px #4EBEFF;
+    outline: none;
+}
+
+.alert{
+    color: red;
+}
+
+.submit:hover{
+    cursor: pointer;
+}
+
+.submit:active{
+    box-shadow: none;
+}
+
+.uname{
+    width: 400px;
+    color: #4EBEFF;
+    font-size: 20px;
+}
+
+.uname input{
+    padding: 25px 0px 5px 0px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid rgb(214, 212, 212);
+    outline: none;
+    color: white;
+    font-size: 18px;
+}
+
+.uname input:focus{
+    border-bottom: 2px solid #4EBEFF;
+}
+
+.Sfields .uname{
+    width: 230px;
+    color: #4EBEFF;
+    font-size: 20px;
+}
+
+.Sfields .uname input{
+    padding: 25px 0px 5px 0px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid rgb(214, 212, 212);
+    outline: none;
+    color: white;
+    font-size: 18px;
+}
+
+.Sfields .uname input:focus{
+    border-bottom: 2px solid #4EBEFF;
+}
+
+.pass{
+    width: 400px;
+}
+
+@media (max-width:1366px){
+
+    .loginform{
+        width: 500px;
+        height: 550px;
+        background-color: #02326E;
+        border-radius: 70px;
+        box-shadow: 2px 1px 6px #02326E;
+    }
+
+    .submit{
+        font-size: 16px;
+    }
+
+    .uname{
+        font-size: 18px;
+    }
+
+    .uname input{
+        font-size: 16px;
+    }
+
+    .fields{
+        padding: 50px 0px 50px 0px;
+    }
+
+    .bg img{
+        width: 650px;
+    }
+
+    .tab{
+        margin-left: 95px;
+    }
+
+    .loginform nav{
+        font-size: 28px;
+    }
+
+    .right{
+        margin-left: 260px;
+    }
+
+}

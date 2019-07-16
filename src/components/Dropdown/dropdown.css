@@ -1,0 +1,110 @@
+.drop-down-container{
+    position: relative;
+    border-radius:4px;
+    background-color:#7B7986;
+    color: #AFECE1;
+    height: 100%;
+    width: 100%;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    font-size: 15px;
+  }
+
+  .drop-tag{
+      width: 100%;
+      height: 100%;
+  }
+  
+  .drop-head{
+    width: 60%;
+    padding: 5px 10px;
+    margin: 10px 0;
+  }
+  
+  .drop-down{
+    z-index: 10;
+    position: absolute;
+    margin-top: 3px;
+    opacity: 1;
+    transition: all 0.3s ease;
+    background-color: #7B7986; 
+    color: #AFECE1;
+    animation: drop-open 0.3s ease;
+    overflow: hidden;
+    border-radius: 3px;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  @keyframes drop-open{
+    0%{
+      transform: scale(0) translateY(-1130px);
+      opacity: 0;
+      }
+    25%{
+      transform: scale(0.3) translateY(-10px);
+      opacity: 0.2;
+    }
+    40%{
+      opacity: 0.5;
+      transform: scale(1) translateY(-8px);
+    }
+    60%{
+      opacity: 0.6;
+      transform: scale(1) translateY(-3px);
+    }
+    80%{
+      opacity: 0.8;
+      transform: scale(1) translateY(0);
+    }
+    100%{
+      transform: scale(1) translateY(0);
+    }
+  }
+  
+  
+  .hide{
+    overflow: hidden;
+    transform: scale(0) translateY(-300px);
+    animation: drop-down 0.2s ease ;
+    animation-fill-mode: forwards;
+  }
+  
+  @keyframes drop-down{
+    0%{
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+    25%{
+      transform: scale(0.5) translateY(-100px);    
+      opacity: 0.3;
+    }
+    50%{
+      transform: scale(0.2) translateY(-200px);
+    }
+    100%{
+      transform: scale(0) translateY(-300px);
+      opacity: 0;
+      transform-origin: 50% 0;
+    }
+  
+  }
+
+  .arrow-drop{
+      width: 10px;
+      height: 10px;
+      transform: rotate(-90deg);
+      transition: all 0.2s ease;
+  }
+
+  .rotate-90{
+      transform: rotate(90deg);
+  }
+  
+  .drop-down-item{
+    padding: 10px 20px;
+  }
+  
+  .drop-down-item:hover{
+    background-color: rgba(255,255,255,0.15);
+  }
