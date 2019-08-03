@@ -52,14 +52,14 @@ export default class Editor extends Component {
   }
 
   componentDidMount() {
-    fetch(`http://${host}/get_questions/sample`, {
+    fetch(`http://${host}/get_questions/${this.props.location.state.name}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
       },
     })
       .then(res => {
-        if (res.status == 200) {
+        if (res.status === 200) {
           return res.json()
         }
         else {
@@ -121,7 +121,7 @@ export default class Editor extends Component {
       body: JSON.stringify(body)
     })
       .then(res => {
-        if (res.status == 200) {
+        if (res.status === 200) {
           return res.json()
         }
         throw "error"
@@ -169,7 +169,7 @@ export default class Editor extends Component {
       smoothScrolling: true
     };
     var tabs = this.state.questions.map((tab, index) => {
-      return index === 0 ? <div onClick={this.updateTab} className="tab-head active-tab">{index + 1}</div> : <div onClick={this.updateTab} className="tab-head">{index + 1}</div>;
+      return index === 0 ? <div onClick={this.updateTab} key={index} className="tab-head active-tab">{index + 1}</div> : <div onClick={this.updateTab} key={index} className="tab-head">{index + 1}</div>;
     })
     return (
       <div className="parent flex flex-column">

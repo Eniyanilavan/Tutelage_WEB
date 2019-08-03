@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import './testcase.css';
 import FileUpload from '../FileUpload';
-import {host} from '../../config'
+import { host } from '../../config'
 
 export default class TestCase extends Component {
     constructor(props) {
         super(props);
         this.state = {
             questions: [<FileUpload />],
-            question_tab: [
-                <div onClick={this.changeQuestion} className="question-num width-full flex align-center justify-center">
-                    1
-            </div>],
-            num_question: 1,
+            question_tab: [],
+            num_question: 0,
             cur_question: 1,
             questions_obj: [
                 {
@@ -64,25 +61,45 @@ export default class TestCase extends Component {
             num_question: this.state.num_question + 1
         })
     }
+    componentDidMount() {
+        var temp = [...this.state.questions];
+        var questions_obj = this.state.questions_obj;
+        var state_d = this.state;
+        for (var i = 0; i < this.props.location.state.count; i++) {
+            questions_obj.push({ string: "", testcases: [{ input: "", output: "" }] });
+            temp.push(1)
+            console.log(temp)
+            state_d.questions = temp;
+            state_d.question_tab = [...this.state.question_tab,
+            <div onClick={this.changeQuestion} className="question-num width-full flex align-center justify-center">
+                {this.state.num_question + 1}
+            </div>];
+            state_d.num_question = this.state.num_question + 1
+        }
+        this.setState({
+            ...state_d
+        })
+    }
     componentDidUpdate() {
         console.log("state", this.state.questions_obj);
     }
 
-    upload = ()=>{
+    upload = () => {
         fetch(`http://${host}/upload/sample`, {
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
             },
-            body:JSON.stringify({"questions":this.state.questions_obj})
+            body: JSON.stringify({ "questions": this.state.questions_obj })
         })
     }
 
     render() {
+        console.log(this.state);
         var question = this.state.questions.map((elem, index) => {
             console.log("the index value is ", index);
             if (index === this.state.cur_question - 1) {
-                return <FileUpload upload={this.upload} updateTestcase={this.updateTestcase} index={index} store={this.state.questions_obj[index]} updateQuestions={this.updateQuestions} />
+                return <FileUpload key={index} upload={this.upload} updateTestcase={this.updateTestcase} index={index} store={this.state.questions_obj[index]} updateQuestions={this.updateQuestions} />
             }
         })
         return (

@@ -34,7 +34,7 @@ export default class Dropdown extends Component {
     render() {
         console.log(this.props.list)
         var list = this.props.list.map(elm=>{
-            return <div className="drop-down-item">{elm}</div>
+            return <div key={elm} className="drop-down-item">{elm}</div>
         })
         return (
             <div style={{height:this.props.height, width:this.props.width, backgroundColor:this.props.bg, color:this.props.font, boxShadow:this.props.shadow}} className="drop-down-container">

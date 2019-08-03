@@ -121,12 +121,12 @@ export default class Login extends Component{
             body:JSON.stringify(body)
         })
         .then(res=>{
-            if(res.status == 409){
+            if(res.status === 409){
                 alert.innerHTML = "User already exists";
                 this.Salert.classList.remove('invisible');
                 return
             }
-            else if(res.status == 500){
+            else if(res.status === 500){
                 alert.innerHTML = "Try again later, if the error continues contact admin."
                 this.Salert.classList.remove('invisible');
                 return

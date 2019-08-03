@@ -1,21 +1,32 @@
-import React ,{Component} from 'react';
+import React, { Component } from 'react';
 import './card.css';
+import { withRouter } from 'react-router-dom';
 
-export default class Card extends Component{
-    render(){
-
-        return(
-            <div className="card flex flex-column padding-bottom-10 align-center">
-                <span className="title padding-top-10">{this.props.title}</span>
+class Card extends Component {
+    getTest = (name) => {
+        this.props.history.push({
+            pathname: '/editor',
+            state: { name: this.props.title }
+        })
+    }
+    render() {
+        return (
+            <div className="card flex flex-column padding-bottom-10 align-center" onClick={this.getTest} >
+                <div className="title width-full flex justify-space-b padding-top-10">
+                    <span>
+                        {this.props.title}
+                    </span>
+                    <span>
+                        Category : {this.props.class}
+                    </span>
+                </div>
                 <div className="flex justify-space-a width-full">
                     <span>
-                        Start Time:{this.props.startTime}
+                        Start Time  : {this.props.startTime}
                     </span>
+                    <span>{this.props.num} question(s)</span>
                     <span>
-                        Number of questions:{this.props.num}
-                    </span>
-                    <span>
-                        Time:{this.props.time}
+                        {this.props.time}(s)
                     </span>
                 </div>
             </div>
@@ -23,3 +34,6 @@ export default class Card extends Component{
 
     }
 }
+
+
+export default withRouter(Card);

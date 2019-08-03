@@ -10,6 +10,7 @@ import './App.css';
 
 class App extends Component {
   render() {
+    console.log('in App');
     return (
       <Router>
         <Switch>

@@ -1,9 +1,25 @@
 .card{
-    width: 500px;
-    height: 300px;
+    width: 450px;
+    height: 140px;
     border-radius: 30px;
     background-color: #02326E;
     box-shadow: 2px 3px 6px rgba(93, 124, 163, 0.767);
     color: #04DBB3;
     justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.title{
+    padding: 20px 80px!important;
+    box-sizing: border-box;
+}
+
+.title span:first-child{
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.title span:last-child{
+    font-weight: lighter;
+    font-size: 14px;
 }
