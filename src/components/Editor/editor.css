@@ -120,6 +120,18 @@ height: 100%;
 .run-container:active{
     transform: scale(0.9);
 }
+.submit-container{
+    width: 100px;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 30px;
+}
+
+.submit-container:active{
+    transform: scale(0.9);
+}
 
 .logs{
     height: calc(100% - 700px);
