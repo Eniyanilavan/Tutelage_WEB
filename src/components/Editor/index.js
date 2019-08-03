@@ -76,6 +76,13 @@ export default class Editor extends Component {
       .catch(e => {
         console.log(e)
       })
+      if(sessionStorage.getItem("attempts")){
+        console.log("hello");
+      }
+      else{
+        console.log("in else");
+        sessionStorage.setItem("attempts",0);
+      }
   }
 
   editorDidMount(editor, monaco) {
@@ -163,6 +170,7 @@ export default class Editor extends Component {
       .catch(e => {
         console.log(e)
       })
+      sessionStorage.setItem("attempts",parseInt(sessionStorage.getItem("attempts"))+1);
   }
 
   run = () => {
@@ -196,7 +204,7 @@ export default class Editor extends Component {
   }
 
   end = () => {
-    
+    console.log(sessionStorage.getItem("attempts"));
   }
 
   updateTab = (e) => {
