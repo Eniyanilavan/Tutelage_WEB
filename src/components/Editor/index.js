@@ -195,6 +195,10 @@ export default class Editor extends Component {
       })
   }
 
+  end = () => {
+    
+  }
+
   updateTab = (e) => {
     console.log("e.target.innerHTML = ", e.target.innerHTML);
     console.log("this.state.active", this.state.active + 1);
@@ -246,6 +250,9 @@ export default class Editor extends Component {
             <div onClick={this.submit} className="submit-container flex justify-space-b align-center margin-right-20">
               <img className="run-img" src={run} />
               <span>SUBMIT</span>
+            </div>
+            <div onClick={this.end} className="submit-container flex justify-space-b align-center margin-right-20">
+              <span>END TEST</span>
             </div>
           </div>
 
