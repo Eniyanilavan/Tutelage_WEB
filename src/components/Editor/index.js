@@ -135,6 +135,70 @@ export default class Editor extends Component {
       })
   }
 
+  submit = () => {
+    var body = {
+      ques_no: this.state.active,
+      code: this.state.code,
+      lang: this.state.lang,
+      id: this.state.id,
+      test: 'sample'
+    }
+    fetch(`http://${host}/code/submit`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    })
+      .then(res => {
+        if (res.status == 200) {
+          return res.json()
+        }
+        throw "error"
+      })
+      .then(data => {
+        console.log(data);
+        WSConnector(data.id);
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
+
+  run = () => {
+    var body = {
+      ques_no: this.state.active,
+      code: this.state.code,
+      lang: this.state.lang,
+      id: this.state.id,
+      test: 'sample'
+    }
+    fetch(`http://${host}/code/run`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    })
+      .then(res => {
+        if (res.status == 200) {
+          return res.json()
+        }
+        throw "error"
+      })
+      .then(data => {
+        console.log(data);
+        WSConnector(data.id);
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
+
+  end = () => {
+    
+  }
+
   updateTab = (e) => {
     console.log("e.target.innerHTML = ", e.target.innerHTML);
     console.log("this.state.active", this.state.active + 1);
@@ -186,6 +250,9 @@ export default class Editor extends Component {
             <div onClick={this.submit} className="submit-container flex justify-space-b align-center margin-right-20">
               <img className="run-img" src={run} />
               <span>SUBMIT</span>
+            </div>
+            <div onClick={this.end} className="submit-container flex justify-space-b align-center margin-right-20">
+              <span>END TEST</span>
             </div>
           </div>
 
