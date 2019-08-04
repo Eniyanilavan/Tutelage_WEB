@@ -72,17 +72,32 @@ export default class Editor extends Component {
           questions: data.questions,
           id: + new Date()
         }, () => { WSConnector(this.state.id) })
-      })
-      .catch(e => {
-        console.log(e)
-      })
       if(sessionStorage.getItem("attempts")){
         console.log("hello");
       }
       else{
         console.log("in else");
-        sessionStorage.setItem("attempts",0);
+    let data = {
+      questions: 10
+    };
+    const attempts = {
+    }
+    for (var index = 0; index < data.questions; index++) {
+      attempts[index] = {
+        count: 0,
+        code: '',
+        error: ['']
       }
+    }
+
+    console.log(attempts);
+    //     sessionStorage.setItem("attempts",JSON.stringify(attempts));
+    //   }
+    //   })
+    //   .catch(e => {
+    //     console.log(e)
+    //   })
+
   }
 
   editorDidMount(editor, monaco) {
@@ -170,7 +185,9 @@ export default class Editor extends Component {
       .catch(e => {
         console.log(e)
       })
-      sessionStorage.setItem("attempts",parseInt(sessionStorage.getItem("attempts"))+1);
+    var attempts = JSON.parse(sessionStorage.getItem("attempts"));
+    attempts[this.state.active].count = attempts[this.state.active].count+1;
+    sessionStorage.setItem("attempts",JSON.stringify(attempts));
   }
 
   run = () => {
@@ -211,6 +228,9 @@ export default class Editor extends Component {
     console.log("e.target.innerHTML = ", e.target.innerHTML);
     console.log("this.state.active", this.state.active + 1);
     if (e.target.innerHTML != this.state.active + 1) {
+      var attempts = JSON.stringify(sessionStorage.getItem("attempts"));
+      attempts[this.state.active].code = this.state.code;
+      sessionStorage.setItem("attempts",JSON.stringify(attempts));
       e.target.classList.toggle('active-tab');
       console.log("hehehe");
       document.getElementsByClassName("tab-head")[this.state.active].classList.toggle("active-tab");
