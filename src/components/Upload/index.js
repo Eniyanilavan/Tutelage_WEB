@@ -5,6 +5,7 @@ import './upload.css';
 import Modal from './Modal/index';
 import { host } from '../../config';
 import { withRouter } from 'react-router-dom';
+import Dropdown from '../Dropdown';
 
 class Upload extends Component {
     modal = () => {
@@ -22,8 +23,9 @@ class Upload extends Component {
             end_date: this.state.end_date,
             duration: parseInt(this.state.duration),
             Type: this.state.type,
-            whom: this.state.whom
+            whom: this.state.year+"_"+this.state.section
         }
+        console.log(body)
         fetch(`http://${host}/create_test`, {
             method: "POST",
             headers: {
@@ -46,6 +48,15 @@ class Upload extends Component {
         this.setState({
             [val]: e.target.value
         });
+    }
+    yearOnChange = (e)=>{
+        var {value} = e.target
+        this.setState({year:value})
+    }
+
+    sectionOnChange = (e)=>{
+        var {value} = e.target
+        this.setState({section:value})
     }
     render() {
 
@@ -71,10 +82,13 @@ class Upload extends Component {
                 <Modal>
                     <div className="modal hide-modal" id="modal-id" >
                         <div className="modal-heading">Test Creation</div>
-                        <div className="services-list input-container">
+                        <div className="services-list input-container flex flex-column justify-space-a">
                             <input type="text" className="test-name" placeholder="Test Name" onChange={(e) => this.saveValue('name', e)} />
                             <input type="number" className="test-duration" placeholder="Test Duration" onChange={(e) => this.saveValue('duration', e)} />
-                            <input type="text" className="class-name" placeholder="Class Name" onChange={(e) => this.saveValue('whom', e)} />
+                            <div className="flex justify-space-a">
+                                <Dropdown onChange={this.yearOnChange} value={"year"} width={"130px"} height={"40px"} default={"Select Year"} bg={"linear-gradient(to right,#6AB5D0,#21F9CF)"} font={"white"} shadow={"1px 0px 6px #4EBEFF"} list={['I', 'II', 'II', 'IV']}/>
+                                <Dropdown onChange={this.sectionOnChange} value={"section"} width={"130px"} height={"40px"} default={"Select Section"} bg={"linear-gradient(to right,#6AB5D0,#21F9CF)"} font={"white"} shadow={"1px 0px 6px #4EBEFF"} list={['A', 'B', 'C']}/>
+                            </div>
                             <input type="date" className="start-date" placeholder="start" onChange={(e) => this.saveValue('start_date', e)} />
                             <input type="date" className="end-date" onChange={(e) => this.saveValue('end_date', e)} />
                             <input type="text" className="test-category" placeholder="Test category" onChange={(e) => this.saveValue('type', e)} />

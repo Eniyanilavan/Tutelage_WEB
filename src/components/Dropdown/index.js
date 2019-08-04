@@ -37,14 +37,14 @@ export default class Dropdown extends Component {
             return <div key={elm} className="drop-down-item">{elm}</div>
         })
         return (
-            <div style={{height:this.props.height, width:this.props.width, backgroundColor:this.props.bg, color:this.props.font, boxShadow:this.props.shadow}} className="drop-down-container">
+            <div style={{height:this.props.height, width:this.props.width, background:this.props.bg, color:this.props.font, boxShadow:this.props.shadow}} className="drop-down-container">
                 <div ref={el=>this.head=el} id="drop-head-id"  className="drop-tag flex align-center">
                     <div ref={el=>this.selected=el} id="selected" className="drop-head">
                         {this.props.default}
                     </div>
                     <div className="arrow"><img className="arrow-drop" ref={el=>this.arrow=el} src={this.props.arrow||arrow} alt="⥮" /></div>
                 </div>
-                <div ref={el=>this.dropId=el} className="drop-down hide" style={{backgroundColor:this.props.dropC||this.props.bg, color:this.props.font}} id="drop-id">
+                <div ref={el=>this.dropId=el} className="drop-down hide" style={{background:this.props.dropC||this.props.bg, color:this.props.font}} id="drop-id">
                     {list}
                 </div>
             </div>

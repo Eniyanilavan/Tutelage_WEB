@@ -80,6 +80,7 @@
     height: 40px;
     box-shadow: -2px 1px 6px #6e6e6e46;
     padding: 10px;
+    overflow: auto;
 }
 
 .tab-head{
