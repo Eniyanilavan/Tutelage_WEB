@@ -7,6 +7,7 @@ export default class Dashborad extends Component {
     state={
         cards:null
     }
+
     componentDidMount() {
         console.log(host);
         fetch(`http://${host}/tests`)
