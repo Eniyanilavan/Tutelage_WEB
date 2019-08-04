@@ -97,6 +97,7 @@ export default class Login extends Component{
             sessionStorage.setItem("dep",data.user[2]);
             sessionStorage.setItem("year",data.user[3]);
             sessionStorage.setItem("sec",data.user[4]);
+            sessionStorage.setItem("token",data.token);
         })
         .catch(e=>{
             console.log(e)

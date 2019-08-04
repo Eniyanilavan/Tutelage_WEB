@@ -4,22 +4,32 @@ import Card from '../Card';
 import { host } from '../../config/index';
 
 export default class Dashborad extends Component {
-    state={
-        cards:null
+    state = {
+        cards: null
     }
     componentDidMount() {
-        console.log(host);
-        fetch(`http://${host}/tests`)
+        var body = {
+            token:sessionStorage.getItem("token")
+        }
+        fetch(`http://${host}/tests?token=${body.token}`,
+            // {
+            //     method: "GET",
+            //     headers: {
+            //         "Content-Type": "application/json"
+            //     },
+            //     body: JSON.stringify(body)
+            // }
+            )
             .then(res => res.json())
             .then(res => {
                 console.log(res)
                 var cards = res.rows.map(elm => {
-                    var date =( new Date(elm[1])).toLocaleTimeString();
-                    
+                    var date = (new Date(elm[1])).toLocaleTimeString();
+
                     return <Card key={elm[0]} title={elm[0]} startTime={date} num={elm[5]} time={elm[2]} class={elm[6]} />
                 })
                 this.setState({
-                    cards:cards
+                    cards: cards
                 });
             });
 
