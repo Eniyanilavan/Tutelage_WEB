@@ -100,9 +100,9 @@ export default class Login extends Component{
             sessionStorage.setItem("year",data.user[3]);
             sessionStorage.setItem("sec",data.user[4]);
             sessionStorage.setItem("token",data.token);
-            // this.props.history.push({
-            //     pathname: '/dashboard',
-            // });
+            this.props.history.push({
+                pathname: '/dashboard',
+            });
         })
         .catch(e=>{
             console.log(e)
