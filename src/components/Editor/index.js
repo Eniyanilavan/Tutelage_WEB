@@ -9,12 +9,12 @@ var that;
 
 var events = {
   'opened': (ws, message, file_id) => {
-    console.log('opened');
+    // console.log('opened');
     ws.send(JSON.stringify({ 'event': 'register', id: file_id }))
   },
   'completed': (ws, message, file_id) => {
-    console.log('completd')
-    console.log(message)
+    // console.log('completd')
+    // console.log(message)
     if (message.result.failed === 0) {
       document.getElementById('logs').innerText = 'SUCCESS'
     }
@@ -28,7 +28,7 @@ var events = {
 var WSConnector = (file_id) => {
   const ws = new WebSocket(`ws://${WShost}`);
   ws.onopen = (event) => {
-    console.log('connected');
+    // console.log('connected');
   }
   ws.onmessage = (message) => {
     message = JSON.parse(message.data);
@@ -43,7 +43,7 @@ export default class Editor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      code: '// type your code...',
+      code: '// type the code...',
       lang: 'python',
       questions: [],
       active: 0,
@@ -67,51 +67,46 @@ export default class Editor extends Component {
         }
       })
       .then(data => {
-        console.log(data);
+        // console.log(data);
+        // console.log(sessionStorage.getItem("attempts"));
+        if (sessionStorage.getItem("attempts") === null) {
+          // console.log("hello");
+        }
+        else {
+          // console.log("in else");
+          const attempts = {
+          }
+          for (var index = 0; index < data.questions.length; index++) {
+            attempts[index] = {
+              count: 0,
+              code: '//type the code',
+              error: ['']
+            }
+          }
+          // console.log(attempts);
+          sessionStorage.setItem("attempts", JSON.stringify(attempts));
+        }
         this.setState({
           questions: data.questions,
           id: + new Date()
         }, () => { WSConnector(this.state.id) })
-      if(sessionStorage.getItem("attempts")){
-        console.log("hello");
-      }
-      else{
-        console.log("in else");
-    let data = {
-      questions: 10
-    };
-    const attempts = {
-    }
-    for (var index = 0; index < data.questions; index++) {
-      attempts[index] = {
-        count: 0,
-        code: '',
-        error: ['']
-      }
-    }
-
-    console.log(attempts);
-    //     sessionStorage.setItem("attempts",JSON.stringify(attempts));
-    //   }
-    //   })
-    //   .catch(e => {
-    //     console.log(e)
-    //   })
-
+      })
+      .catch(e => {
+        console.log(e)
+      })
   }
-
-  editorDidMount(editor, monaco) {
-    console.log('editorDidMount', editor);
+  editorDidMount = (editor, monaco) => {
+    // console.log('editorDidMount', editor);
     editor.focus();
   }
 
-  onChange(newValue, e) {
+  onChange = (newValue, e) => {
     console.log('onChange', newValue, e);
     that.setState({
       code: newValue
     })
   }
-  extend(e) {
+  extend = (e) => {
     var extender = document.getElementById('extender');
     var editor = document.getElementById('editor');
     var questions = document.getElementById('ques');
@@ -186,8 +181,8 @@ export default class Editor extends Component {
         console.log(e)
       })
     var attempts = JSON.parse(sessionStorage.getItem("attempts"));
-    attempts[this.state.active].count = attempts[this.state.active].count+1;
-    sessionStorage.setItem("attempts",JSON.stringify(attempts));
+    attempts[this.state.active].count = attempts[this.state.active].count + 1;
+    sessionStorage.setItem("attempts", JSON.stringify(attempts));
   }
 
   run = () => {
@@ -225,14 +220,19 @@ export default class Editor extends Component {
   }
 
   updateTab = (e) => {
-    console.log("e.target.innerHTML = ", e.target.innerHTML);
-    console.log("this.state.active", this.state.active + 1);
+    // console.log("e.target.innerHTML = ", e.target.innerHTML);
+    // console.log("this.state.active", this.state.active + 1);
     if (e.target.innerHTML != this.state.active + 1) {
-      var attempts = JSON.stringify(sessionStorage.getItem("attempts"));
+      var attempts = JSON.parse(sessionStorage.getItem("attempts"));
+      console.log(attempts);
+      console.log(this.state.code);
       attempts[this.state.active].code = this.state.code;
-      sessionStorage.setItem("attempts",JSON.stringify(attempts));
+      this.setState({
+        code: attempts[parseInt(e.target.innerHTML) - 1].code
+      });
+      sessionStorage.setItem("attempts", JSON.stringify(attempts));
       e.target.classList.toggle('active-tab');
-      console.log("hehehe");
+      // console.log("hehehe");
       document.getElementsByClassName("tab-head")[this.state.active].classList.toggle("active-tab");
       this.setState({
         active: parseInt(e.target.innerHTML) - 1
@@ -241,6 +241,7 @@ export default class Editor extends Component {
 
   }
   render() {
+    // console.log(JSON.parse(sessionStorage.getItem("attempts")));
     const code = this.state.code;
     const options = {
       selectOnLineNumbers: true,
@@ -268,7 +269,7 @@ export default class Editor extends Component {
         <nav className="Enav width-full flex justify-space-b  align-center">
           <div className="margin-left-10 product-name">
             Tutelage
-          </div>
+</div>
           <div className="margin-left-10 product-name">
             {this.props.location.state.name}
           </div>
