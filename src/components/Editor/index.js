@@ -248,7 +248,10 @@ export default class Editor extends Component {
         <nav className="Enav width-full flex justify-space-b  align-center">
           <div className="margin-left-10 product-name">
             Tutelage
-                  </div>
+          </div>
+          <div className="margin-left-10 product-name">
+            {this.props.location.state.name}
+          </div>
           <div className="flex justify-space-a">
             <Dropdown onChange={this.OnChange} value={"lang"} width={"130px"} height={"40px"} default={this.state.lang} bg={"#fff"} dropC={"#02326e"} font={"#04DBB3"} list={['c', 'python', 'java']} />
             <div onClick={this.run} className="run-container flex justify-space-b align-center margin-right-20">

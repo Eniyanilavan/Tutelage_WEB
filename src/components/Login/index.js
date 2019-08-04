@@ -95,7 +95,7 @@ export default class Login extends Component{
             sessionStorage.setItem("uname",data.user[1]);
             sessionStorage.setItem("reg",data.user[0]);
             sessionStorage.setItem("dep",data.user[2]);
-            sessionStorage.setItem("class",data.user[3]);
+            sessionStorage.setItem("year",data.user[3]);
             sessionStorage.setItem("sec",data.user[4]);
         })
         .catch(e=>{

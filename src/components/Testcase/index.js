@@ -16,7 +16,8 @@ export default class TestCase extends Component {
                     string: "",
                     testcases: [{ input: "", output: "" }]
                 },
-            ]
+            ],
+            name: this.props.location.state.name
         }
     }
 
@@ -85,12 +86,20 @@ export default class TestCase extends Component {
     }
 
     upload = () => {
-        fetch(`http://${host}/upload/sample`, {
+        fetch(`http://${host}/upload/${this.state.name}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ "questions": this.state.questions_obj })
+        })
+        .then(res=>{
+            if(res.status == 200){
+                alert("Upload successful")
+            }
+            else{
+                alert("Unsuccessful")
+            }
         })
     }
 
