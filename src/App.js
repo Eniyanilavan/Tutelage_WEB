@@ -7,6 +7,7 @@ import Card from './components/Card';
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import './App.css';
+import { host } from './config';
 
 class App extends Component {
   render() {

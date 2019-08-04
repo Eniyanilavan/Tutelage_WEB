@@ -86,7 +86,7 @@ export default class TestCase extends Component {
     }
 
     upload = () => {
-        fetch(`http://${host}/upload/${this.state.name}`, {
+        fetch(`http://${host}/upload/${this.state.name}?token=${sessionStorage.getItem("token")}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

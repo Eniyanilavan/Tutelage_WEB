@@ -26,7 +26,7 @@ class Upload extends Component {
             whom: this.state.year+"_"+this.state.section
         }
         console.log(body)
-        fetch(`http://${host}/create_test`, {
+        fetch(`http://${host}/create_test?token=${sessionStorage.getItem("token")}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

@@ -52,7 +52,7 @@ export default class Editor extends Component {
   }
 
   componentDidMount() {
-    fetch(`http://${host}/get_questions/${this.props.location.state.name}`, {
+    fetch(`http://${host}/get_questions/${this.props.location.state.name}?token=${sessionStorage.getItem("token")}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -75,9 +75,15 @@ export default class Editor extends Component {
         else {
           // console.log("in else");
           const attempts = {
+			  id:sessionStorage.getItem("reg"),
+			  name:sessionStorage.getItem("uname"),
+			  year:sessionStorage.getItem("year"),
+			  sec:sessionStorage.getItem("sec"),
+			  dept:sessionStorage.getItem("dep"),
+			  report:{}
           }
           for (var index = 0; index < data.questions.length; index++) {
-            attempts[index] = {
+            attempts.report[index] = {
               count: 0,
               code: '//type the code',
               error: ['']
@@ -115,12 +121,42 @@ export default class Editor extends Component {
     extender.style.transform ? extender.style.transform = "" : extender.style.transform = "rotate(-180deg)";
   }
 
-  OnChange = (e) => {
-    var { value } = e.target;
-    this.setState({
-      lang: value
-    })
-  }
+	OnChange = (e) => {
+		var { value } = e.target;
+		this.setState({
+			lang: value
+		})
+	}
+
+	submit = () => {
+		var body = {
+			ques_no: this.state.active,
+			code: this.state.code,
+			lang: this.state.lang,
+			id: this.state.id,
+			test: 'sample'
+		}
+		fetch(`http://${host}/code/submit?token=${sessionStorage.getItem("token")}`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		})
+			.then(res => {
+				if (res.status === 200) {
+					return res.json()
+				}
+				throw "error"
+			})
+			.then(data => {
+				console.log(data);
+				WSConnector(data.id);
+			})
+			.catch(e => {
+				console.log(e)
+			})
+	}
 
   submit = () => {
     var body = {
@@ -130,37 +166,7 @@ export default class Editor extends Component {
       id: this.state.id,
       test: 'sample'
     }
-    fetch(`http://${host}/code/submit`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body)
-    })
-      .then(res => {
-        if (res.status === 200) {
-          return res.json()
-        }
-        throw "error"
-      })
-      .then(data => {
-        console.log(data);
-        WSConnector(data.id);
-      })
-      .catch(e => {
-        console.log(e)
-      })
-  }
-
-  submit = () => {
-    var body = {
-      ques_no: this.state.active,
-      code: this.state.code,
-      lang: this.state.lang,
-      id: this.state.id,
-      test: 'sample'
-    }
-    fetch(`http://${host}/code/submit`, {
+    fetch(`http://${host}/code/submit?token=${sessionStorage.getItem("token")}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -185,39 +191,45 @@ export default class Editor extends Component {
     sessionStorage.setItem("attempts", JSON.stringify(attempts));
   }
 
-  run = () => {
-    var body = {
-      ques_no: this.state.active,
-      code: this.state.code,
-      lang: this.state.lang,
-      id: this.state.id,
-      test: 'sample'
-    }
-    fetch(`http://${host}/code/run`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body)
-    })
-      .then(res => {
-        if (res.status == 200) {
-          return res.json()
-        }
-        throw "error"
-      })
-      .then(data => {
-        console.log(data);
-        WSConnector(data.id);
-      })
-      .catch(e => {
-        console.log(e)
-      })
-  }
+	run = () => {
+		var body = {
+			ques_no: this.state.active,
+			code: this.state.code,
+			lang: this.state.lang,
+			id: this.state.id,
+			test: 'sample'
+		}
+		fetch(`http://${host}/code/run?token=${sessionStorage.getItem("token")}`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(body)
+		})
+			.then(res => {
+				if (res.status == 200) {
+					return res.json()
+				}
+				throw "error"
+			})
+			.then(data => {
+				console.log(data);
+				WSConnector(data.id);
+			})
+			.catch(e => {
+				console.log(e)
+			})
+	}
 
-  end = () => {
-    console.log(sessionStorage.getItem("attempts"));
-  }
+	end = () => {
+		fetch(`http://${host}/report?token=${sessionStorage.getItem("token")}`,{
+			headers:{
+				'Content-Type':'application/json'
+			},
+			body:sessionStorage.getItem("attempts"),
+			method:"POST"
+		})
+	}
 
   updateTab = (e) => {
     // console.log("e.target.innerHTML = ", e.target.innerHTML);
@@ -240,86 +252,85 @@ export default class Editor extends Component {
     }
 
   }
-  render() {
-    // console.log(JSON.parse(sessionStorage.getItem("attempts")));
-    const code = this.state.code;
-    const options = {
-      selectOnLineNumbers: true,
-      scrollbar: {
-        useShadows: false,
-        verticalHasArrows: true,
-        horizontalHasArrows: true,
-        vertical: 'visible',
-        horizontal: 'visible',
-        verticalScrollbarSize: 14,
-        horizontalScrollbarSize: 10,
-        arrowSize: 20
-      },
-      theme: 'vs',
-      fontSize: 16,
-      automaticLayout: true,
-      rulers: [0],
-      smoothScrolling: true
-    };
-    var tabs = this.state.questions.map((tab, index) => {
-      return index === 0 ? <div onClick={this.updateTab} key={index} className="tab-head active-tab">{index + 1}</div> : <div onClick={this.updateTab} key={index} className="tab-head">{index + 1}</div>;
-    })
-    return (
-      <div className="parent flex flex-column">
-        <nav className="Enav width-full flex justify-space-b  align-center">
-          <div className="margin-left-10 product-name">
-            Tutelage
-</div>
-          <div className="margin-left-10 product-name">
-            {this.props.location.state.name}
-          </div>
-          <div className="flex justify-space-a">
-            <Dropdown onChange={this.OnChange} value={"lang"} width={"130px"} height={"40px"} default={this.state.lang} bg={"#fff"} dropC={"#02326e"} font={"#04DBB3"} list={['c', 'python', 'java']} />
-            <div onClick={this.run} className="run-container flex justify-space-b align-center margin-right-20">
-              <img className="run-img" src={run} />
-              <span>RUN</span>
-            </div>
-            <div onClick={this.submit} className="submit-container flex justify-space-b align-center margin-right-20">
-              <img className="run-img" src={run} />
-              <span>SUBMIT</span>
-            </div>
-            <div onClick={this.end} className="submit-container flex justify-space-b align-center margin-right-20">
-              <span>END TEST</span>
-            </div>
-          </div>
+	render() {
+		const code = this.state.code;
+		const options = {
+			selectOnLineNumbers: true,
+			scrollbar: {
+				useShadows: false,
+				verticalHasArrows: true,
+				horizontalHasArrows: true,
+				vertical: 'visible',
+				horizontal: 'visible',
+				verticalScrollbarSize: 14,
+				horizontalScrollbarSize: 10,
+				arrowSize: 20
+			},
+			theme: 'vs',
+			fontSize: 16,
+			automaticLayout: true,
+			rulers: [0],
+			smoothScrolling: true
+		};
+		var tabs = this.state.questions.map((tab, index) => {
+			return index === 0 ? <div onClick={this.updateTab} key={index} className="tab-head active-tab">{index + 1}</div> : <div onClick={this.updateTab} key={index} className="tab-head">{index + 1}</div>;
+		})
+		return (
+			<div className="parent flex flex-column">
+				<nav className="Enav width-full flex justify-space-b  align-center">
+					<div className="margin-left-10 product-name">
+						Tutelage
+					</div>
+					<div className="margin-left-10 product-name">
+						{this.props.location.state.name}
+					</div>
+					<div className="flex justify-space-a">
+						<Dropdown onChange={this.OnChange} value={"lang"} width={"130px"} height={"40px"} default={this.state.lang} bg={"#fff"} dropC={"#02326e"} font={"#04DBB3"} list={['c', 'python', 'java']} />
+						<div onClick={this.run} className="run-container flex justify-space-b align-center margin-right-20">
+							<img className="run-img" src={run} />
+							<span>RUN</span>
+						</div>
+						<div onClick={this.submit} className="submit-container flex justify-space-b align-center margin-right-20">
+							<img className="run-img" src={run} />
+							<span>SUBMIT</span>
+						</div>
+						<div onClick={this.end} className="submit-container flex justify-space-b align-center margin-right-20">
+							<span>END TEST</span>
+						</div>
+					</div>
 
-        </nav>
-        <div className="workspace flex width-full">
-          <div id="ques" className="questions height-full flex flex-column">
-            <nav className="questions-nav">
-              <div className="tabs flex">
-                {tabs}
-              </div>
-            </nav>
-            <div className="question-nav flex">
-              <div className="questions-tab">
-                {this.state.questions[this.state.active]}
-              </div>
-              <div className="extender flex align-center justify-center" onClick={this.extend}>
-                <img id="extender" src={arrow}></img>
-              </div>
-            </div>
-            <div id="logs" className="logs">
+				</nav>
+				<div className="workspace flex width-full">
+					<div id="ques" className="questions height-full flex flex-column">
+						<nav className="questions-nav">
+							<div className="tabs flex">
+								{tabs}
+							</div>
+						</nav>
+						<div className="question-nav flex">
+							<div className="questions-tab">
+								{this.state.questions[this.state.active]}
+							</div>
+							<div className="extender flex align-center justify-center" onClick={this.extend}>
+								<img id="extender" src={arrow}></img>
+							</div>
+						</div>
+						<div id="logs" className="logs">
 
-            </div>
-          </div>
-          <div id="editor" className="editor">
-            <MonacoEditor
-              language={this.state.lang}
-              value={code}
-              options={options}
-              onChange={this.onChange}
-              editorDidMount={this.editorDidMount}
-            />
-          </div>
-        </div>
+						</div>
+					</div>
+					<div id="editor" className="editor">
+						<MonacoEditor
+							language={this.state.lang}
+							value={code}
+							options={options}
+							onChange={this.onChange}
+							editorDidMount={this.editorDidMount}
+						/>
+					</div>
+				</div>
 
-      </div>
-    )
-  }
+			</div>
+		)
+	}
 }

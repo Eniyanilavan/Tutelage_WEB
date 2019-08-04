@@ -76,18 +76,20 @@ export default class Login extends Component{
             regno:this.state.regno,
             password:this.state.password
         }
-        fetch(`http://${host}/login`,{
+        fetch(`http://${host}/login?token=${sessionStorage.getItem("token")}`,{
             method:"POST",
             headers: {
-                "Content-Type":"application/json"
+                "Content-Type":"application/json",
             },
-            body:JSON.stringify(body)
+            body:JSON.stringify(body),
+            credentials: 'same-origin'
         })
         .then(res=>{
             if(res.status == 403){
                 alert.innerHTML = "Wrong user name or password"
                 this.Lalert.classList.remove('invisible');
             }
+            console.log(res.headers)
             return res.json()
         })
         .then(data=>{
@@ -98,6 +100,9 @@ export default class Login extends Component{
             sessionStorage.setItem("year",data.user[3]);
             sessionStorage.setItem("sec",data.user[4]);
             sessionStorage.setItem("token",data.token);
+            // this.props.history.push({
+            //     pathname: '/dashboard',
+            // });
         })
         .catch(e=>{
             console.log(e)
@@ -117,9 +122,10 @@ export default class Login extends Component{
             dept:this.state.dept,
             year:this.state.year,
             section:this.state.section,
-            password:this.state.password
+            password:this.state.password,
+            isAdmin: false
         }
-        fetch(`http://${host}/signup`,{
+        fetch(`http://${host}/signup?token=${sessionStorage.getItem("token")}`,{
             method:"POST",
             headers: {
                 "Content-Type":"application/json"

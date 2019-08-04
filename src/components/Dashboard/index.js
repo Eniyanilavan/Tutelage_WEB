@@ -7,11 +7,9 @@ export default class Dashborad extends Component {
     state = {
         cards: null
     }
+
     componentDidMount() {
-        var body = {
-            token:sessionStorage.getItem("token")
-        }
-        fetch(`http://${host}/tests?token=${body.token}`,
+        fetch(`http://${host}/tests?token=${sessionStorage.getItem("token")}`,
             // {
             //     method: "GET",
             //     headers: {
